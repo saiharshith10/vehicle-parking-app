@@ -1,78 +1,32 @@
 {% extends "layout.html" %}
-
-{% block title %}
-    Login | Vehicle Parking System
+{%block title %}
+Login Page - Vehicle Parking System
 {% endblock %}
-
 {% block content %}
-<style>
-    body {
-        background: linear-gradient(to right, #e3f2fd, #ffffff);
-    }
-</style>
-
-<div class="container py-5">
-    <div class="row justify-content-center align-items-center">
-        <!-- Feature Cards Section -->
-        <div class="col-lg-6 mb-4">
-            <div class="row g-3">
-                <div class="col-md-12">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">🚗 Secure Parking</h5>
-                            <p class="card-text text-muted">Your vehicle is safely monitored with 24/7 surveillance and real-time tracking.</p>
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <div class="row-justify-content-center">
+        <div class="col-6 m-4">
+            <h1 style="color:blue">Login</h1>
+            <form action="/" method="POST">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="username">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
-                <div class="col-md-12">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">📱 Easy Access</h5>
-                            <p class="card-text text-muted">Login from anywhere and manage your parking slots from your phone or desktop.</p>
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
                 </div>
-                <div class="col-md-12">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">📊 Track Vehicles</h5>
-                            <p class="card-text text-muted">Keep track of your vehicle entry and exit history, all in one dashboard.</p>
-                        </div>
-                    </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
-            </div>
+            
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="/register"><button type="button" class="btn btn-success">Register</button></a>
+            </form>
         </div>
-
-        <!-- Login Form Section -->
-        <div class="col-lg-6">
-            <div class="card shadow-lg p-4">
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold">Login</h2>
-                    <p class="text-muted">Access your Vehicle Parking account</p>
-                </div>
-
-                <form action="" method="POST" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="username" class="form-label fw-semibold">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
-                    </div>
-
-                    <div class="d-grid mb-3">
-                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
-                    </div>
-
-                    <div class="text-center">
-                        <small class="text-muted">Don't have an account?</small><br>
-                        <a href="{{ url_for('register') }}" class="text-decoration-none fw-semibold">New, Create One!</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+  
     </div>
 </div>
 {% endblock %}

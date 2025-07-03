@@ -8,14 +8,15 @@ class User(db.Model):
     passhash = db.Column(db.String(256), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean,default=False)
-
+    address = db.Column(db.String(200), nullable=False)
+    pincode = db.Column(db.String(10), nullable=False)
 class parking_lot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location_name = db.Column(db.String(100), nullable=False)
     max_slots = db.Column(db.Integer,nullable=False)
     price = db.Column(db.Float,nullable=False)
     address = db.Column(db.String(200),nullable=False)
-    Pincode = db.Column(db.String(10),nullable=False)
+    pincode = db.Column(db.String(10),nullable=False)
 
 
 class parking_spot(db.Model):

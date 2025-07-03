@@ -1,0 +1,30 @@
+{%extends 'layout.html'%}
+{%block title%}
+    User Dashboard - Vehicle Parking System
+{%endblock%}
+{%block styles%}
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+{%endblock%}
+{%block content%}
+
+    <div>
+        <h4 class="text-left" style="font-family: 'Poppins', sans-serif;font-weight:600">
+            Welcome, {{ session.get('username') }}!!
+        </h4>
+    </div>
+
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">User Dashboard</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Welcome, {{ session.get('username') }}</h5>
+                <p class="card-text">This is your user dashboard where you can manage your vehicle parking details.</p>
+                <a href="/view_parking_details" class="btn btn-primary">View Parking Details</a>
+                
+            </div>
+        </div>        
+    </div>      
+
+{%endblock%}
+
