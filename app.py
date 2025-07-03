@@ -1,11 +1,18 @@
 from flask import Flask,render_template
+from controllers.create_database_instance import create_tables
+from controllers.database import db
+from controllers.config import Config
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    db.init_app(app)
+    app.app_context().push()
+    return app
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+app =create_app()
+from controllers.routes import *
 
 if __name__ == '__main__':
+    create_tables()
     app.run(debug=True)
-    
