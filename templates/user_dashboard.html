@@ -1,30 +1,79 @@
 {%extends 'layout.html'%}
 {%block title%}
-    User Dashboard - Vehicle Parking System
+User Dashboard - Vehicle Parking System
 {%endblock%}
-{%block styles%}
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-{%endblock%}
+
+
 {%block content%}
 
-    <div>
-        <h4 class="text-left" style="font-family: 'Poppins', sans-serif;font-weight:600">
-            Welcome, {{ session.get('username') }}!!
-        </h4>
-    </div>
+<div>
+    <h4 class="text-left" style="font-family: 'Poppins', sans-serif;font-weight:600">
+        Welcome, {{ session.get('username') }}!!
+    </h4>
+</div>
+
+<h1 class="text-left my-2" style="color:blue">Recent Parking History</h1>
+<div class="container-fluid col-12 my-3 mb-3 py-1">
+
+    <table class="table table-bordered table-sm mt-3 text-center">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Parking Lot</th>
+                <th scope="col">Vehicle Number</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="container">
+    <form>
+        <div class="mb-3 col-6">
+            <label for="exampleInputEmail1" class="form-label fw-bold"> 
+                <h3>Search by address/Pincode</h3>
+            </label>
+            <input type="text" class="form-control" id="exampleInputEmail1">
+        </div>
+    </form>
+</div>
 
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">User Dashboard</h2>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Welcome, {{ session.get('username') }}</h5>
-                <p class="card-text">This is your user dashboard where you can manage your vehicle parking details.</p>
-                <a href="/view_parking_details" class="btn btn-primary">View Parking Details</a>
-                
-            </div>
-        </div>        
-    </div>      
-
+<h1 class="text-left my-2" style="color:blue">Parking Lots</h1>
+<div class="container-fluid col-12 my-3 mb-3 py-1">
+    <table class="table table-bordered table-sm mt-3 text-center">
+        <thead>
+            <tr>
+                <th scope="col">Lot ID</th>
+                <th scope="col">Location Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Availability</th>
+                <th scope="col">Price/Hour</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lot in lots %}
+            <tr>
+                <td>{{ lot.id }}</td>
+                <td>{{ lot.location_name }}</td>
+                <td>{{ lot.address }}</td>
+                <td>
+                    {% if lot.available_spots > 0 %}
+                    <span class="badge bg-success">{{ lot.available_spots }}</span>
+                    {% else %}
+                    <span class="badge bg-danger">Full</span>
+                    {% endif %}
+                </td>
+                <td>₹{{ lot.price }}/hr</td>
+                <td>
+                    <a href="{{url_for('book')}}" class="btn btn-primary btn-sm">Book</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {%endblock%}
-

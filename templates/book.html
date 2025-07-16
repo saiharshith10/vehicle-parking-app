@@ -1,0 +1,25 @@
+{%extends 'layout.html'%}
+
+{%block content%}
+
+<h1 class="text-center my-2" style="color:blue">Book the Parking Spot</h1>
+<div class="container-fluid col-6 my-5">
+    <form action="/book" methods="POST" class="form">
+        <div class="mb-3">
+            <label for="spot_id" class="form-label">Parking Spot ID</label>
+            <input type="text" class="form-control" id="spot_id" name="spot_id" required>
+        </div>
+        <div class="mb-3">
+            <label for="lot_id" class="form-label">Parking Lot ID</label>
+            <input type="text" class="form-control" id="lot_id" name="lot_id" required>
+        </div>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">Start Time</label>
+            <input type="datetime-local" class="form-control" id="user_id" name="user_id" required>
+        </div>
+        <div class="button button-success">
+            <button type="submit" class="btn btn-primary">Book Now</button>
+        </div>
+    </form>
+</div>
+{%endblock%}

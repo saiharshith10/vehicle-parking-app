@@ -1,11 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3> HI admin</h3>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}
+Admin Dashboard | Vehicle Parking
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid bg-light p-3 mb-4">
+    <center>
+      <form action = "{{url_for('search_parking_lots')}}" method = "POST" class="d-flex ms-5 col-6" role="search">
+        <input class="form-control me-2" type="search" name="search_query" placeholder="Search by Address" aria-label="Search" />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    <center>
+</div>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">Parking Lots</h2>
+    <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#addLotForm">
+      + Add Lot
+    </button>
+  </div>
+
+  <!-- Flash Messages
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %} 
+  {% endwith %} -->
+
+  <!-- Add Lot Form -->
+  <div class="collapse mb-5" id="addLotForm">
+    <form method="POST" action="{{ url_for('add_lot') }}" class="card card-body shadow-sm">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="location_name" class="form-label">Lot Title</label>
+          <input type="text" name="location_name" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+          <label for="max_spots" class="form-label">Max Spots</label>
+          <input type="number" name="max_spots" class="form-control" min="1" required>
+        </div>
+        <div class="col-md-3">
+          <label for="price" class="form-label">Price/Per Hour in ₹</label>
+          <input type="number" name="price" class="form-control" step="1" required>
+        </div>
+        <div class="col-md-6">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" name="address" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label for="pincode" class="form-label">Pincode</label>
+          <input type="text" name="pincode" class="form-control" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-success">Add Lot</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Parking Lot Cards -->
+  <div class="row g-4">
+    {% for lot in parking_lots %}
+    <div class="col-md-4">
+      <div class="card shadow rounded-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <h5 class="card-title text-secondary">{{ lot.location_name }}, {{ lot.address}}</h5>
+            <div><h6 class="card-subtitle text-muted fw-bold m-2">₹{{ lot.price }}/hr</h6></div>
+            
+          </div>
+          <p class="text-success fw-bold">
+            Occupied:
+            {{ lot.spots | selectattr("status", "equalto", "occupied") | list | length }}
+            / {{ lot.max_spots }}
+          </p>
+          <div>
+              <a href="{{url_for('edit_parking_lot', lot_id=lot.id)}}" class="text-warning me-2">Edit</a>
+              <a href="{{url_for('delete_parking_lot', lot_id=lot.id)}}" class="text-danger">Delete</a>
+            </div>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            {% for spot in lot.spots %}
+              {% if spot.status == 'occupied' %}
+                <a href="{{url_for('spot_details',lot_id=lot.id,spot_id=spot.id)}}"><span class="badge bg-danger px-3 py-2">O</span></a>
+              {% elif spot.status == 'available'  %}
+                <a href="{{url_for('spot_details',lot_id=lot.id,spot_id=spot.id)}}"><span class="badge bg-success px-3 py-2">A</span></a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
