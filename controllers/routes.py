@@ -246,6 +246,7 @@ def delete_parking_lot(lot_id):
     lot = parking_lot.query.get_or_404(lot_id)
 
     if request.method == 'POST':
+        parking_spot.query.filter_by(parking_lot_id=lot.id).delete()  # first we have to delete all the spots in the lot
         db.session.delete(lot)
         db.session.commit()
         flash(f"{lot.location_name} deleted successfully!", "success")
