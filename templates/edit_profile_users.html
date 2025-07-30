@@ -1,0 +1,44 @@
+{%extends 'layout.html'%}
+
+{%block title%}
+Admin Dashboard - Vehicle Parking System
+{%endblock%}
+
+{%block styles%}
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+{%endblock%}
+
+{%block content%}
+<h1 class="text-left my-4" style="color:blue">Edit Profile</h1>
+<form action="/edit_profile_users" method="POST" class="form">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="mb-3 col-6">
+        <label for="old_username" class="form-label">Old Username</label>
+        <input type="text" class="form-control" id="old_username" name="username" placeholder="Enter Old Username" required>
+      </div>
+      <div class="mb-3 col-6">
+        <label for="new_username" class="form-label">New Username</label>
+        <input type="text" class="form-control" id="new_username" name="new_username" placeholder="Enter New Username"
+          required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-6">
+        <label for="old_email" class="form-label">Old Password</label>
+        <input type="password" class="form-control" id="old_email" aria-describedby="emailHelp" name="password"
+          placeholder="Enter Old Password" required>
+        
+      </div>
+      <div class="mb-3 col-6">
+        <label for="new_email" class="form-label">New Password</label>
+        <input type="password" class="form-control" id="new_email" aria-describedby="emailHelp" name="new_password"
+          placeholder="Enter New Password" required>
+        
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit Changes</button>
+</form>
+{%endblock%}

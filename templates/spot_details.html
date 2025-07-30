@@ -7,7 +7,7 @@ Spot Details | Vehicle Parking
 {% block content %}
 <div class="container mt-4">
   <h3 class="text-primary">Spot Details</h3>
-  <div class="card p-4 shadow mt-3">
+  <div class="card p-4 shadow mt-3"><!--here we use card to display the details of the spot and the vehicle-->
     <h5>Lot: {{ lot.location_name }}</h5>
     <p><strong>Address:</strong> {{ lot.address }}</p>
     <p><strong>Pincode:</strong> {{ lot.pincode }}</p>
@@ -22,10 +22,15 @@ Spot Details | Vehicle Parking
     </p>
     <div> 
         {% if spot.status == 'occupied' %}
-          <p><strong>Occupied By:</strong> {{ spot.vehicle_number }}</p>
+          <p><strong>Occupied By:</strong> {{ spot.reserve_parking_spot[-1].user.name }}</p>
           <p><strong>Start Date/Time of Parking:</strong> {{ spot.reserve_parking_spot[-1].start_time }}</strong></p>
           <p><strong>End Date/Time of Parking:</strong> {{ spot.reserve_parking_spot[-1].end_time }}</strong></p>
-          <p><strong>Price:</strong> ₹{{ ((spot.reserve_parking_spot[-1].end_time - spot.reserve_parking_spot[-1].start_time).total_seconds() / 3600 * spot.lot.price) | int }}.00/-</p>
+          {% set latest_booking = spot.reserve_parking_spot[-1] %}
+            {% if latest_booking.end_time %}
+              <p><strong>Price:</strong> ₹{{ ((latest_booking.end_time - latest_booking.start_time).total_seconds() / 3600 * spot.lot.price) | int }}.00/-</p>
+            {% else %}
+              <p><strong>Price:</strong> Still parked — price not available yet.</p>
+            {% endif %}
         {% endif %}
         <form method="POST" action="{{ url_for('delete_spot', lot_id=lot.id, spot_id=spot.id) }}">
           <button type="submit" class="btn btn-danger">Delete Spot</button>

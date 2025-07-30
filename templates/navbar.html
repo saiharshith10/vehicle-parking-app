@@ -14,7 +14,7 @@
         <li class="nav-item">
           <a class="nav-link" href="/register">Register</a>
         </li>
-        {% elif session.get('username') == 'admin' %}
+        {% elif session.get('is_admin') == 1 %}
         <!-- Admin user -->
         <li class="nav-item">
           <a class="nav-link active" href="{{ url_for('admin_dashboard') }}">Home</a>
@@ -23,7 +23,7 @@
           <a class="nav-link" href="{{ url_for('admin_users') }}">Users</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Summary</a>
+          <a class="nav-link" href="{{ url_for('admin_summary')}}">Summary</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('edit_profile') }}">Edit Profile</a>
@@ -39,7 +39,7 @@
         
 
         {% else %}
-        <!-- Regular user -->
+        <!-- for normal user -->
         <li class="nav-item">
           <a class="nav-link active" href="{{ url_for('user_dashboard') }}">Home</a>
         </li>
@@ -47,7 +47,10 @@
           <a class="nav-link" href="{{ url_for('edit_profile_users') }}">Edit Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">Summary</a>
+          <a class="nav-link" href="{{ url_for('user_summary') }}">Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('bookings')}}" style="color:blue;">Bookings History</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('logout') }}" style="color: red;">Logout</a>

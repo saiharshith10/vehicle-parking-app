@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2 class="text-left my-4" style="color:blue">Recent Parking History</h2>
+<table class="table table-bordered table-sm text-center">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Location</th>
+      <th>Vehicle No</th>
+      <th>Timestamp</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for booking in bookings %}
+    <tr>
+      <td>{{ booking.id }}</td>
+      <td>{{ booking.parking_spot.lot.location_name }}</td>
+      <td>{{ booking.vehicle_number }}</td>
+      <td>{{ booking.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+      <td>
+        {% if booking.parking_spot.status == 'occupied' %}
+        <a href="{{ url_for('release', booking_id=booking.id, lot_id=booking.parking_spot.lot.id) }}">
+          <button class="btn btn-danger">Release</button>
+        </a>
+        {% else %}
+        <a href="{{ url_for('parked_out', booking_id=booking.id, lot_id=booking.parking_spot.lot.id) }}">
+          <button class="btn btn-success">Parked Out</button>
+        </a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

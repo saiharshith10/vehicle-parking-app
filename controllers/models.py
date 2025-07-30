@@ -10,6 +10,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean,default=False)
     address = db.Column(db.String(200), nullable=False)
     pincode = db.Column(db.String(10), nullable=False)
+
     # phone_number = db.Column(db.String(10),nullable=True)
 class parking_lot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,19 +21,20 @@ class parking_lot(db.Model):
     address = db.Column(db.String(200),nullable=False)
     pincode = db.Column(db.String(10),nullable=True)
     spots = db.relationship('parking_spot')
-
+    
 class parking_spot(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     parking_lot_id = db.Column(db.Integer,db.ForeignKey('parking_lot.id'),nullable=False)
     status = db.Column(db.String(20),nullable=False)
-    vehicle_number = db.Column(db.String(20),nullable=True)
     reserve_parking_spot = db.relationship('reserve_parking_spot')
     lot = db.relationship('parking_lot')
+    
 class reserve_parking_spot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     parking_spot_id = db.Column(db.Integer, db.ForeignKey('parking_spot.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
-    end_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=True)
+    vehicle_number = db.Column(db.String(20),nullable=True)
     parking_spot = db.relationship('parking_spot')
     user = db.relationship('User')

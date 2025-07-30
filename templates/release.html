@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2 class="mb-4 text-warning">Release the Parking Spot</h2>
+
+<form method="POST">
+  <div class="mb-3">
+    <label class="form-label">Spot ID:</label>
+    <input type="text" class="form-control" value="{{ spot.id }}" readonly>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Vehicle Number:</label>
+    <input type="text" class="form-control" value="{{ booking.vehicle_number }}" readonly>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Parking Time:</label>
+    <input type="text" class="form-control" value="{{ booking.start_time.strftime('%Y-%m-%d %H:%M:%S') }}" readonly>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Releasing Time:</label>
+    <input type="text" class="form-control" value="{{ datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') }}" readonly>
+  </div>
+
+  <!-- Total cost will be calculated after clicking on submit and appear on flash message -->
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary">Release</button>
+    <a href="{{ url_for('bookings') }}" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
+{% endblock %}

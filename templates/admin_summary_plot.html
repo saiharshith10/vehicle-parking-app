@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block title %}Admin Summary{% endblock %}
+
+{% block content %}
+<div class="text-center mt-4">
+    <h3>Admin Overview - Bookings by Lot</h3>
+    <img src="data:image/png;base64,{{ revenue_chart }}" class="img-fluid mt-3" alt="Revenue Chart">
+
+    <h3 class="mt-5">Parking Spot Status Overview</h3>
+    <img src="data:image/png;base64,{{ occupancy_chart }}" class="img-fluid mt-3" alt="Occupancy Chart">
+</div>
+{% endblock %}

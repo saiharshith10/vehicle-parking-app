@@ -3,23 +3,61 @@
 {%block content%}
 
 <h1 class="text-center my-2" style="color:blue">Book the Parking Spot</h1>
+<br>
+ <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow rounded-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <h5 class="card-title text-secondary">{{ lot.location_name }}, {{ lot.address}}</h5>
+            <div><h6 class="card-subtitle text-muted fw-bold m-2">₹{{ lot.price }}/hr</h6></div>
+            
+          </div>
+          <p class="text-success fw-bold">
+            Occupied:
+            {{ lot.spots | selectattr("status", "equalto", "occupied") | list | length }}
+            / {{ lot.max_spots }}
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            {% for spot in lot.spots %}
+              {% if spot.status == 'occupied' %}
+                <a href="#"><span class="badge bg-danger px-3 py-2">O({{spot.id}})</span></a>
+              {% elif spot.status == 'available'  %}
+                <a href="#" data-bs-toggle="tooltip" data-bs-title="Spot ID: {{ spot.id }}">
+                <a href="#"><span class="badge bg-success px-3 py-2">A({{spot.id}})</span></a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid col-6 my-5">
-    <form action="/book" methods="POST" class="form">
+    <form action="{{url_for('book',lot_id=lot.id)}}" method="POST" class="form">
         <div class="mb-3">
             <label for="spot_id" class="form-label">Parking Spot ID</label>
-            <input type="text" class="form-control" id="spot_id" name="spot_id" required>
-        </div>
-        <div class="mb-3">
-            <label for="lot_id" class="form-label">Parking Lot ID</label>
-            <input type="text" class="form-control" id="lot_id" name="lot_id" required>
+            <input type="text" class="form-control" id="lot_id" name="spot_id" value="{{spot_id}}" required>
+            <small id="emailHelp" class="form-text text-muted">Spot id is in the bracket</small>
+            <input type="hidden" name="lot_id" value="{{spot_id}}">
         </div>
         <div class="mb-3">
             <label for="user_id" class="form-label">Start Time</label>
-            <input type="datetime-local" class="form-control" id="user_id" name="user_id" required>
+            <input type="datetime-local" class="form-control" id="user_id" name="start_time" required>
+        </div>
+        <div class="mb-3">
+            <label for="vehicle_num" class="form-label">Vehicle Number</label>
+            <input type="text" class="form-control" id="vehicle_num" name="vehicle_number" placeholder="Enter Vehicle Number" value="{{ vehicle_number }}" required>
         </div>
         <div class="button button-success">
-            <button type="submit" class="btn btn-primary">Book Now</button>
+            <button type="submit" class="btn btn-primary">Book</button>
         </div>
     </form>
 </div>
+
+
+
 {%endblock%}

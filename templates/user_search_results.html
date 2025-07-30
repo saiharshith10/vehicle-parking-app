@@ -1,0 +1,39 @@
+{%extends "layout.html"%}
+{% block content %}
+<!--This is no different from admin_search_results-->
+<h1 class="text-left my-2" style="color:blue">Parking Lots</h1>
+<div class="container-fluid col-12 my-3 mb-3 py-1">
+    <table class="table table-bordered table-sm mt-3 text-center">
+        <thead>
+            <tr>
+                <th scope="col">Lot ID</th>
+                <th scope="col">Location Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Availability</th>
+                <th scope="col">Price/Hour</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lot in results %}
+            <tr>
+                <td>{{ lot.id }}</td>
+                <td>{{ lot.location_name }}</td>
+                <td>{{ lot.address }}</td>
+                <td>
+                    {% if lot.available_spots > 0 %}
+                    <span class="badge bg-success">{{ lot.available_spots }}</span>
+                    {% else %}
+                    <span class="badge bg-danger">Full</span>
+                    {% endif %}
+                </td>
+                <td>₹{{ lot.price }}/hr</td>
+                <td>
+                    <a href="{{url_for('book',lot_id=lot.id)}}" class="btn btn-primary btn-sm">Book</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}
